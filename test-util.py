@@ -44,19 +44,25 @@ def dev_get_ip_from_mac(mac):
     return None
 
 
-# [+?]-----------------------------------------------------# 3=DEV TEST=json_rpc
+# [+?]-----------------------------------------------------
+# 3=DEV TEST=json_rpc
 @contracts.contract(ip=str, dev_id=int, returns="int|None")
 def dev_test_start(ip, dev_id):
     dev_url = f"http://{ip}/api"
     request_json_rpc = {"jsonrpc": "2.0", "method": "do_test", "id": dev_id}
     try:
-        response_http_json = requests.post(url=dev_url, json=request_json_rpc).json()
+        response_http = requests.post(url=dev_url, json=request_json_rpc)
+    except:
+        return None
+
+    try:
+        response_http_json = response_http.json()
 
         response_json_rpc = response_http_json.get("data", {"result": -1})
         response_dev_result = response_json_rpc["result"]
         return response_dev_result
     except:
-        return None
+        return -1
 
 
 # [+]------------------------------------------------------
