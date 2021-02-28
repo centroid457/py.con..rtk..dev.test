@@ -57,10 +57,11 @@ def dev_test_start(ip, dev_id):
 
     try:
         response_http_json = response_http.json()
-
         response_json_rpc = response_http_json.get("data", {"result": -1})
-        response_dev_result = response_json_rpc["result"]
-        return response_dev_result
+
+        if response_json_rpc["jsonrpc"] == "2.0" and response_json_rpc["id"] == dev_id:
+            response_dev_result = response_json_rpc["result"]
+            return response_dev_result
     except:
         return -1
 
