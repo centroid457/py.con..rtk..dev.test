@@ -129,9 +129,3 @@ def udp_listen():
                     dev_found_mac_dict[dev_mac].update({"result": dev_test_result})
 
                     dev_test_save_result(dev_mac)
-
-
-if __name__ == '__main__':
-    udp_listen()
-
-sys.exit()
